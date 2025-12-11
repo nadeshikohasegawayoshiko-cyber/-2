@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私のポートフォリオ</title>
+
+    <style>
+        /*
+        ========================================
+        1. 変数とリセット
+        ========================================
+        */
+        :root {
+            /* メインカラー */
+            --main-color: #667eea; 
+            /* 薄い背景色 */
+            --light-bg: #f4f6ff; 
+            /* テキスト色 */
+            --text-color: #333;
+            /* アクセント色 (ホバーなど) */
+            --accent-color: #4c66cc;
+            /* ボーダー色 */
+            --border-color: #ddd;
+            
+            /* 新しいヒーローセクション用の背景色 */
+            --hero-start-color: #e3efff; 
+            --hero-end-color: #f7fbff;
+        }
+
+        /* CSSリセットの簡略版 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /*
+        ========================================
+        2. 全体スタイル・フォント
+        ========================================
+        */
+        body {
+            /* フォント設定 (モダンで清潔感のあるフォント) */
+            font-family: 'Yu Gothic', '游ゴシック', 'YuGothic', 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff; /* 基本の背景は白 */
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--main-color);
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-color);
+            margin-bottom: 0.5em;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            padding-bottom: 0.5em;
+            margin-bottom: 1.5em;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        section {
+            padding: 60px 5%; /* 上下の余白 */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /*
+        ========================================
+        3. ヘッダー・ナビゲーション
+        ========================================
+        */
+        header {
+            background-color: var(--main-color);
+            color: #fff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; /* スクロールしても固定 */
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        /* PC表示時のナビゲーションスタイル */
+        #pc-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: var(--light-bg);
+        }
+
+        /* ハンバーガーアイコンはPCでは非表示 */
+        .hamburger {
+            display: none;
+        }
+        
+        /*
+        ========================================
+        4. ヒーローセクション
+        ========================================
+        */
+        .hero {
+            /* 修正: グラデーション背景に変更し、よりプロフェッショナルな印象に */
+            background: linear-gradient(135deg, var(--hero-start-color) 0%, var(--hero-end-color) 100%);
+            text-align: center;
+            padding: 120px 5%; /* パディングを増やして高さを出す */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* 軽いシャドウで立体感を出す */
+        }
+
+        .hero h2 {
+            font-size: 4rem; /* より大きく */
+            color: var(--main-color);
+            border-bottom: none;
+            margin-bottom: 0.1em;
+            /* 軽いテキストシャドウで強調 */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05); 
+        }
+        
+        /* 修正: キャッチコピーのフォントをより大きく、目立つように */
+        .hero #typing-text {
+            font-size: 1.5rem; 
+            font-weight: 500;
+            color: var(--text-color);
+            margin-top: 20px;
+        }
+
+
+        /*
+        ========================================
+        5. About / Skills / Contact セクション
+        ========================================
+        */
+        #about h3 {
+            color: var(--main-color);
+            font-size: 1.5rem;
+            margin-top: 1.5em;
+        }
+        
+        #about p {
+            margin-bottom: 1em;
+        }
+
+        .skills ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            /* PCでは中央揃えを維持 */
+            justify-content: center; 
+        }
+
+        .skills li {
+            background-color: var(--light-bg);
+            padding: 10px 20px;
+            border-radius: 5px;
+            border-left: 3px solid var(--main-color);
+            font-weight: bold;
+        }
+
+        .contact p {
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        .contact address {
+            text-align: center;
+            font-style: normal;
+        }
+
+        /*
+        ========================================
+        6. Worksセクション (グリッドレイアウト・レスポンシブ対応)
+        ========================================
+        */
+        .works-list {
+            display: grid;
+            gap: 30px;
+            /* PC: 3列表示 */
+            grid-template-columns: repeat(3, 1fr); 
+        }
+
+        .work-item {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .work-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .work-item h3 {
+            color: var(--main-color);
+            font-size: 1.2rem;
+        }
+
+        /* Works内の画像スタイル */
+        .work-item img {
+            width: 150px; 
+            height: auto;
+            display: block; 
+            margin: 0 auto 10px auto; 
+            cursor: pointer; 
+            
+            max-width: 100%; 
+            border-radius: 4px;
+        }
+
+        .work-item a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            border: 1px solid var(--main-color);
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .work-item a:hover {
+            background-color: var(--main-color);
+            color: #fff;
+        }
+
+        /*
+        ========================================
+        7. フッター
+        ========================================
+        */
+        footer {
+            background-color: var(--text-color);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        /*
+        ========================================
+        8. モーダル (Lightbox) スタイル
+        ========================================
+        */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9); 
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh; 
+            object-fit: contain; 
+        }
+        
+        /* 閉じるボタン (PC/タブレット用) */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        /*
+        ========================================
+        10. アニメーションスタイル (AOS: Scroll Fade-in)
+        ========================================
+        */
+        /* アニメーション前の初期状態 (セクションタイトル用) */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px); 
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        /* アニメーション後の状態 (画面内に入ったとき) */
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* スキルアイコンと作品カードにアニメーションの初期状態を適用 */
+        .skills li, .work-item {
+            opacity: 0; 
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .skills li.is-visible, .work-item.is-visible {
+            /* 表示状態を適用 */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 作品カードに遅延効果を持たせる */
+        .works-list .work-item:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        .works-list .work-item:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+        .works-list .work-item:nth-child(4) {
+            transition-delay: 0.3s;
+        }
+        .works-list .work-item:nth-child(5) {
+            transition-delay: 0.4s;
+        }
+        .works-list .work-item:nth-child(6) {
+            transition-delay: 0.5s;
+        }
+
+        /*
+        ========================================
+        11. タイピングアニメーションスタイル (再有効化) 
+        ========================================
+        */
+        /* キャッチコピーのコンテナ */
+        #typing-text {
+            /* font-sizeは4.heroセクションで上書き */
+            color: var(--text-color);
+            overflow: hidden; 
+            white-space: nowrap; 
+            border-right: 0.15em solid var(--main-color); 
+            width: auto; 
+            display: inline-block; 
+        }
+
+        /* カーソルの点滅アニメーションを定義 */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--main-color); }
+        }
+
+        /* タイピング完了後にカーソルに適用するスタイル */
+        .typed-cursor {
+            border-right: 0.15em solid var(--main-color) !important;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        
+        /*
+        ========================================
+        13. ハンバーガーメニュー スタイル
+        ========================================
+        */
+        
+        /* ハンバーガーアイコンの基本スタイル */
+        .hamburger {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 5px 0;
+            z-index: 100; 
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* メニュー開閉時のアイコンアニメーション */
+        .hamburger.is-active span:nth-child(1) {
+            transform: translateY(14px) rotate(45deg);
+        }
+
+        .hamburger.is-active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.is-active span:nth-child(3) {
+            transform: translateY(-14px) rotate(-45deg);
+        }
+
+        /* スマホ用ナビゲーションメニューの初期スタイル */
+        #global-nav {
+            position: fixed;
+            top: 0;
+            left: 100%; 
+            width: 100%;
+            height: 100%;
+            background-color: var(--main-color); 
+            transition: left 0.3s ease-in-out;
+            z-index: 999;
+            padding-top: 80px; 
+            display: none; /* PCでは非表示 */
+        }
+
+        #global-nav.is-open {
+            left: 0; 
+        }
+
+        #global-nav ul {
+            flex-direction: column; 
+            text-align: center;
+            gap: 0;
+            width: 100%;
+        }
+
+        #global-nav li {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #global-nav li:last-child {
+            border-bottom: none;
+        }
+
+        #global-nav a {
+            display: block;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        /*
+        ========================================
+        14. メディアクエリ (レスポンシブ対応) - 768px以下で切り替え
+        ========================================
+        */
+        @media (max-width: 768px) {
+            /* ヘッダー: PCナビゲーションを非表示、ハンバーガーアイコンを表示 */
+            header {
+                flex-direction: row; 
+            }
+            
+            #pc-nav {
+                display: none; 
+            }
+            
+            .hamburger {
+                display: flex; /* ハンバーガーアイコンを表示 */
+            }
+            
+            /* スマホ表示時にグローバルナビゲーションを表示する */
+            #global-nav {
+                display: block; 
+            }
+
+            /* ヒーローセクションのフォントサイズ調整 (スマホ向け) */
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            .hero #typing-text {
+                font-size: 1.2rem;
+                /* スマホでは一行表示を解除し、折り返しを許可 */
+                white-space: normal; 
+            }
+            
+            .works-list {
+                grid-template-columns: 1fr;
+            }
+            
+            /* スキルリストを左揃えにする */
+            .skills ul {
+                justify-content: flex-start; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="site-title">
+            <h1>私のポートフォリオ</h1>
+        </div>
+        
+        <nav id="pc-nav">
+            <ul>
+                <li><a href="#hero">ホーム</a></li>
+                <li><a href="#about">私について</a></li>
+                <li><a href="#skills">スキル</a></li>
+                <li><a href="#works">作品</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+        
+        <div id="hamburger-btn" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    
+    <nav id="global-nav">
+        <ul>
+            <li><a href="#hero">ホーム</a></li>
+            <li><a href="#about">私について</a></li>
+            <li><a href="#skills">スキル</a></li>
+            <li><a href="#works">作品</a></li>
+            <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="hero" class="hero">
+            <h2>ようこそ！</h2>
+            <p id="typing-text">データと心をつなぐ、正確なサポート。</p>
+            
+        </section>
+
+        <section id="about" class="about">
+            <h2 class="fade-in">私について</h2>
+            <h3 class="fade-in">長谷川 淑子（はせがわ よしこ）</h3>
+            
+            <p class="fade-in">
+                4月28日生まれ。岡山県生まれの仙台市育ちです。
+            </p>
+            
+            <p class="fade-in">
+                地方私立大学を卒業後、東北大学電気通信研究所の教授秘書として勤務。それからは、様々な職場でパソコン（Word、Excelなど）を使ったデータ入力業務などに携わってまいりました。これまで、ExcelやWordを用いたデータ入力業務を主軸に、正確かつスピーディな情報処理能力を培ってまいりました。
+            </p>
+            
+            <p class="fade-in">
+                何よりも大切にしてきたのは、業務における**「コミュニケーション」**です。ただデータを入力するだけでなく、メンバーとの円滑な連携を通じて、資料を作成してきました。
+            </p>
+            <p class="fade-in">
+                趣味は、刺繍やつまみ細工をはじめ、手を動かして何かを生み出すことです。この「ものづくり」で培った、細部へのこだわりや根気強さ、そして新しいものに挑戦する好奇心は、日々の仕事の質を高めるエネルギー源となっています。
+            </p>
+            
+        </section>
+
+        <section id="skills" class="skills">
+            <h2 class="fade-in">スキル</h2>
+            <ul>
+                <li>**データ処理・PCスキル**: Excel、Wordを用いたデータ入力、集計、文書作成</li>
+                <li>HTML5 / CSS3</li>
+                <li>JavaScript (React, Vueなど)</li>
+                <li>デザインツール (Photoshop, Illustratorなど)</li>
+            </ul>
+        </section>
+
+        <section id="works" class="works">
+            <h2 class="fade-in">作品</h2>
+            <div class="works-list">
+                <article class="work-item">
+                    <img src="images/刺繍.png" alt="刺繍作品のイメージ画像" data-src="images/刺繍.png" loading="lazy">
+                    <h3>作品タイトル 1</h3>
+                    <p>作品の説明文。使用技術や制作期間などを記載。</p>
+                    <a href="#" target="_blank">作品を見る</a>
+                </article>
+                
+                <article class="work-item">
+                    <img src="images/日本刺繍.png" alt="日本刺繍の作品イメージ画像" data-src="images/日本刺繍.png" loading="lazy">
+                    <h3>作品タイトル 2</h3>
+                    <p>作品の説明文。使用技術や制作期間などを記載。</p>
+                    <a href="#" target="_blank">作品を見る</a>
+                </article>
+
+                <article class="work-item">
+                    <img src="images/つまみ細工.png" alt="つまみ細工の作品イメージ画像" data-src="images/つまみ細工.png" loading="lazy">
+                    <h3>作品タイトル 3</h3>
+                    <p>作品の説明文。使用技術や制作期間などを記載。</p>
+                    <a href="#" target="_blank">作品を見る</a>
+                </article>
+
+                <article class="work-item">
+                    <img src="images/placeholder.png" alt="作品のイメージ画像" data-src="images/placeholder.png" loading="lazy">
+                    <h3>作品タイトル 4</h3>
+                    <p>作品の説明文。使用技術や制作期間などを記載。</p>
+                    <a href="#" target="_blank">作品を見る</a>
+                </article>
+
+                <article class="work-item">
+                    <img src="images/placeholder.png" alt="作品のイメージ画像" data-src="images/placeholder.png" loading="lazy">
+                    <h3>作品タイトル 5</h3>
+                    <p>作品の説明文。使用技術や制作期間などを記載。</p>
+                    <a href="#" target="_blank">作品を見る</a>
+                </article>
+
+                <article class="work-item">
+                    <img src="images/placeholder.png" alt="作品のイメージ画像" data-src="images/placeholder.png" loading="lazy">
+                    <h3>作品タイトル 6</h3>
+                    <p>作品の説明文。使用技術や制作期間などを記載。</p>
+                    <a href="#" target="_blank">作品を見る</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2 class="fade-in">お問い合わせ</h2>
+            <p>ご依頼やご質問などございましたら、お気軽にご連絡ください。</p>
+            <address>
+                <p>メールアドレス: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+            </address>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 私のポートフォリオ All Rights Reserved.</p>
+        </footer>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // ========================================
+            // (E) ハンバーガーメニュー機能
+            // ========================================
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const globalNav = document.getElementById('global-nav');
+
+            const toggleMenu = () => {
+                const isOpen = globalNav.classList.contains('is-open');
+                
+                hamburgerBtn.classList.toggle('is-active');
+                globalNav.classList.toggle('is-open');
+                
+                // メニュー展開中は背景のスクロールを禁止
+                document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+            };
+
+            // 1. ハンバーガーボタンクリックで開閉
+            hamburgerBtn.addEventListener('click', toggleMenu);
+            
+            // 2. メニュー内のリンククリックで閉じる (スムーズスクロールと連携)
+            globalNav.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', () => {
+                    // スムーズスクロール後にメニューを閉じる
+                    setTimeout(toggleMenu, 300); // アニメーション時間に合わせて遅延
+                });
+            });
+
+
+            // ========================================
+            // (A) スムーススクロール機能 
+            // ========================================
+            const header = document.getElementById('main-header');
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    // PCナビゲーションのリンクのみを対象とする (スマホメニューリンクはEで処理)
+                    if (this.closest('#pc-nav')) { 
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href'); 
+                        const targetElement = document.querySelector(targetId);
+
+                        if (targetElement) {
+                            const headerHeight = header ? header.offsetHeight : 0;
+                            const targetPosition = targetElement.getBoundingClientRect().top;
+                            const currentScroll = window.pageYOffset;
+                            const offsetPosition = currentScroll + targetPosition - headerHeight;
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // ========================================
+            // (B) Intersection Observer (スクロール時のフェードイン)
+            // ========================================
+            
+            const observerTargets = [
+                ...document.querySelectorAll('.fade-in'),
+                ...document.querySelectorAll('.work-item'),
+                ...document.querySelectorAll('.skills li')
+            ];
+            
+            const options = {
+                root: null, 
+                rootMargin: '0px 0px -50px 0px', 
+                threshold: 0 
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, options);
+
+            observerTargets.forEach(target => {
+                observer.observe(target);
+            });
+
+
+            // ========================================
+            // (C) 画像モーダル機能 (Lightbox)
+            // ========================================
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const closeBtn = document.getElementsByClassName("close")[0];
+            const workImages = document.querySelectorAll(".work-item img");
+
+            const closeModal = () => {
+                modal.style.display = "none";
+                document.body.style.overflow = 'auto'; 
+            };
+
+            workImages.forEach(img => {
+                img.onclick = function() {
+                    modal.style.display = "flex";
+                    modalImg.src = this.getAttribute('data-src'); 
+                    document.body.style.overflow = 'hidden'; 
+                }
+            });
+
+            closeBtn.onclick = closeModal;
+
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            }
+            
+            document.onkeydown = function(e) {
+                e = e || window.event;
+                if (e.key === "Escape" || e.keyCode === 27) {
+                    if (modal.style.display === "flex") {
+                        closeModal();
+                    }
+                }
+            };
+            
+            // ========================================
+            // (D) タイピングアニメーション機能
+            // ========================================
+            const typingElement = document.getElementById('typing-text');
+            if (typingElement) {
+                const originalText = typingElement.textContent;
+                typingElement.textContent = ''; // 初期化してテキストを非表示にする
+                
+                // 5秒に設定し、確実に最後まで表示されるようにする
+                const totalDuration = 5000; 
+                const delay = totalDuration / originalText.length;
+                let i = 0;
+
+                const typeWriter = () => {
+                    if (i < originalText.length) {
+                        typingElement.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, delay);
+                    } else {
+                        // アニメーション完了後、カーソル点滅クラスを適用
+                        typingElement.classList.add('typed-cursor');
+                    }
+                }
+                
+                // タイピングアニメーションを開始
+                setTimeout(typeWriter, 500);
+            }
+
+        });
+    </script>
+
+</body>
+</html>
